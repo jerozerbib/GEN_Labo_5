@@ -22,11 +22,8 @@ string Customer::statement(){
         // determine amounts for each line
         thisAmount = computeRentalPrice(each);
 
-        // add frequent renter points
-        frequentRenterPoints++;
-        // add bonus for a two day new release rental
-        if ( ( each.getMovie().getPriceCode() == Movie::NEW_RELEASE )
-             && each.getDaysRented() > 1 ) frequentRenterPoints++;
+        // determine frequent points for a rental
+        frequentRenterPoints += computeFrequentPoint(each);
 
         // show figures for this rental
         result << "\t" << each.getMovie().getTitle() << "\t"
@@ -38,6 +35,18 @@ string Customer::statement(){
     result << "You earned " << frequentRenterPoints
            << " frequent renter points";
     return result.str();
+}
+
+int Customer::computeFrequentPoint(const Rental &rental) const {// add frequent renter points
+    int frequentRenterPoints = 1;
+
+
+    // add bonus for a two day new release rental
+    if ((rental.getMovie().getPriceCode() == Movie::NEW_RELEASE) && rental.getDaysRented() > 1){
+        frequentRenterPoints++;
+    }
+
+    return frequentRenterPoints;
 }
 
 double Customer::computeRentalPrice(const Rental &rental) const {
