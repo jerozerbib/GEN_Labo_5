@@ -17,6 +17,10 @@ public:
 private:
     std::string _name;
     std::vector< Rental > _rentals;
+
+    double computeRentalPrice(const Rental &rental) const;
+
+    int computeFrequentPoint(const Rental &rental) const;
 };
 
 inline Customer::

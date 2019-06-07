@@ -8,8 +8,7 @@ using std::vector;
 
 using namespace std;
 
-string Customer::statement()
-{
+string Customer::statement(){
     double totalAmount = 0;
     int frequentRenterPoints = 0;
     vector< Rental >::iterator iter = _rentals.begin();
@@ -21,27 +20,10 @@ string Customer::statement()
         Rental each = *iter;
 
         // determine amounts for each line
-        switch ( each.getMovie().getPriceCode() ) {
-            case Movie::REGULAR:
-                thisAmount += 2;
-                if ( each.getDaysRented() > 2 )
-                    thisAmount += ( each.getDaysRented() - 2 ) * 1.5 ;
-                break;
-            case Movie::NEW_RELEASE:
-                thisAmount += each.getDaysRented() * 3;
-                break;
-            case Movie::CHILDRENS:
-                thisAmount += 1.5;
-                if ( each.getDaysRented() > 3 )
-                    thisAmount += ( each.getDaysRented() - 3 ) * 1.5;
-                break;
-        }
+        thisAmount = computeRentalPrice(each);
 
-        // add frequent renter points
-        frequentRenterPoints++;
-        // add bonus for a two day new release rental
-        if ( ( each.getMovie().getPriceCode() == Movie::NEW_RELEASE )
-             && each.getDaysRented() > 1 ) frequentRenterPoints++;
+        // determine frequent points for a rental
+        frequentRenterPoints += computeFrequentPoint(each);
 
         // show figures for this rental
         result << "\t" << each.getMovie().getTitle() << "\t"
@@ -53,4 +35,36 @@ string Customer::statement()
     result << "You earned " << frequentRenterPoints
            << " frequent renter points";
     return result.str();
+}
+
+int Customer::computeFrequentPoint(const Rental &rental) const {// add frequent renter points
+    int frequentRenterPoints = 1;
+
+
+    // add bonus for a two day new release rental
+    if ((rental.getMovie().getPriceCode() == Movie::NEW_RELEASE) && rental.getDaysRented() > 1){
+        frequentRenterPoints++;
+    }
+
+    return frequentRenterPoints;
+}
+
+double Customer::computeRentalPrice(const Rental &rental) const {
+    double amount = 0;
+    switch (rental.getMovie().getPriceCode()) {
+        case Movie::REGULAR:
+            amount += 2;
+            if (rental.getDaysRented() > 2)
+                amount += (rental.getDaysRented() - 2) * 1.5;
+            break;
+        case Movie::NEW_RELEASE:
+            amount += rental.getDaysRented() * 3;
+            break;
+        case Movie::CHILDRENS:
+            amount += 1.5;
+            if (rental.getDaysRented() > 3)
+                amount += (rental.getDaysRented() - 3) * 1.5;
+            break;
+    }
+    return amount;
 }
