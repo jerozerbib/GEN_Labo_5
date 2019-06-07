@@ -41,6 +41,7 @@ add_executable(
         src/Movie.cpp
         src/Movie.h
         src/Rental.h
+        src/CustomerTest.cpp
 )
 # Trivial example using gtest and gmock
 target_link_libraries(GEN_Labo5 gtest gmock_main)
