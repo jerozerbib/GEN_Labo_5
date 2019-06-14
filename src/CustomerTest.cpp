@@ -76,3 +76,38 @@ TEST(CustomerTest, frequentPointsWithANewReleaseMovieForTwoDays) {
     ASSERT_EQ(frequentPoints, 2);
 }
 
+TEST(CustomerTest, rentalPriceWithARegularMovieForTwoDays) {
+    Customer customer("Olivier");
+    double price = customer.computeRentalPrice(Rental( Movie( "James Bond : Casino Royale", Movie::REGULAR ), 2));
+
+    ASSERT_EQ(price, 2);
+}
+
+TEST(CustomerTest, rentalPriceWithARegularMovieForThreeDays) {
+    Customer customer("Olivier");
+    double price = customer.computeRentalPrice(Rental( Movie( "James Bond : Casino Royale", Movie::REGULAR ), 3));
+
+    ASSERT_EQ(price, 3.5);
+}
+
+TEST(CustomerTest, rentalPriceWithANewReleaseForOneDay) {
+    Customer customer("Olivier");
+    double price = customer.computeRentalPrice(Rental( Movie( "Avengers : Endgame", Movie::NEW_RELEASE ), 1));
+
+    ASSERT_EQ(price, 3);
+}
+
+TEST(CustomerTest, rentalPriceWithAChildrensMovieForThreeDays) {
+    Customer customer("Olivier");
+    double price = customer.computeRentalPrice(Rental( Movie( "Oui-Oui", Movie::CHILDRENS), 3));
+
+    ASSERT_EQ(price, 1.5);
+}
+
+TEST(CustomerTest, rentalPriceWithAChildrensMovieForFourDays) {
+    Customer customer("Olivier");
+    double price = customer.computeRentalPrice(Rental( Movie( "Oui-Oui", Movie::CHILDRENS), 4));
+
+    ASSERT_EQ(price, 3);
+}
+
