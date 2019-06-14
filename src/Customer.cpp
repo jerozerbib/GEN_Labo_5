@@ -26,7 +26,7 @@ string Customer::statement(){
         frequentRenterPoints += computeFrequentPoint(each);
 
         // show figures for this rental
-        result << "\t" << each.getMovie().getTitle() << "\t"
+        result << "\t" << each.getMovie()->getTitle() << "\t"
                << thisAmount << "\n";
         totalAmount += thisAmount;
     }
@@ -38,12 +38,12 @@ string Customer::statement(){
 }
 
 int Customer::computeFrequentPoint(const Rental &rental) const {// add frequent renter points
-    return ((rental.getMovie().getPriceCode() == Movie::NEW_RELEASE) && rental.getDaysRented() > 1) ? 2 : 1;
+    return ((rental.getMovie()->getPriceCode() == Movie::NEW_RELEASE) && rental.getDaysRented() > 1) ? 2 : 1;
 }
 
 double Customer::computeRentalPrice(const Rental &rental) const {
     double amount = 0;
-    switch (rental.getMovie().getPriceCode()) {
+    switch (rental.getMovie()->getPriceCode()) {
         case Movie::REGULAR:
             amount += 2;
             if (rental.getDaysRented() > 2)

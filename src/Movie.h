@@ -10,10 +10,11 @@ public:
     static const int NEW_RELEASE = 1;
 
     Movie( const std::string& title, int priceCode = REGULAR );
+    Movie();
 
-    int getPriceCode() const;
+    virtual int getPriceCode() const;
     void setPriceCode( int arg );
-    std::string getTitle() const;
+    virtual const std::string& getTitle() const;
 
 private:
     std::string _title;
@@ -32,7 +33,11 @@ getPriceCode() const { return _priceCode; }
 inline void Movie::
 setPriceCode( int arg ) { _priceCode = arg; }
 
-inline std::string Movie::
+inline const std::string& Movie::
 getTitle() const { return _title; }
+
+inline Movie::Movie() {
+
+}
 
 #endif // MOVIE_H
