@@ -38,15 +38,7 @@ string Customer::statement(){
 }
 
 int Customer::computeFrequentPoint(const Rental &rental) const {// add frequent renter points
-    int frequentRenterPoints = 1;
-
-
-    // add bonus for a two day new release rental
-    if ((rental.getMovie().getPriceCode() == Movie::NEW_RELEASE) && rental.getDaysRented() > 1){
-        frequentRenterPoints++;
-    }
-
-    return frequentRenterPoints;
+    return ((rental.getMovie().getPriceCode() == Movie::NEW_RELEASE) && rental.getDaysRented() > 1) ? 2 : 1;
 }
 
 double Customer::computeRentalPrice(const Rental &rental) const {
