@@ -47,3 +47,32 @@ TEST(CustomerTest, statementForThreeMovies) {
 
     ASSERT_EQ(customer.statement(), "Rental Record for Olivier\n\tKarate Kid\t9.5\n\tAvengers: Endgame\t15\n\tSnow White\t1.5\nAmount owed is 26\nYou earned 4 frequent renter points");
 }
+
+TEST(CustomerTest, frequentPointsWithANewReleaseMovieForOnlyOneDay) {
+    Customer customer("Olivier");
+    int frequentPoints = customer.computeFrequentPoint(Rental( Movie( "Avengers: Endgame", Movie::NEW_RELEASE ), 1));
+
+    ASSERT_EQ(frequentPoints, 1);
+}
+
+TEST(CustomerTest, frequentPointsWithAChildrenMovieForTwoDays) {
+    Customer customer("Olivier");
+    int frequentPoints = customer.computeFrequentPoint(Rental( Movie( "Oui-Oui", Movie::CHILDRENS ), 2));
+
+    ASSERT_EQ(frequentPoints, 1);
+}
+
+TEST(CustomerTest, frequentPointsWithAChildrenMovieForOneDay) {
+    Customer customer("Olivier");
+    int frequentPoints = customer.computeFrequentPoint(Rental( Movie( "Non-Non", Movie::CHILDRENS ), 1));
+
+    ASSERT_EQ(frequentPoints, 1);
+}
+
+TEST(CustomerTest, frequentPointsWithANewReleaseMovieForTwoDays) {
+    Customer customer("Olivier");
+    int frequentPoints = customer.computeFrequentPoint(Rental( Movie( "Avengers: Endgame", Movie::NEW_RELEASE ), 2));
+
+    ASSERT_EQ(frequentPoints, 2);
+}
+
