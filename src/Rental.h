@@ -1,29 +1,38 @@
+#include <utility>
+
 // Rental.h
 #ifndef RENTAL_H
 #define RENTAL_H
 #include "Movie.h"
+#include <memory>
 
 class Rental {
 public:
-    Rental( const Movie& movie, int daysRented );
+    using Member = std::shared_ptr<Movie>;
+    Rental( Member movie, int daysRented );
+    Rental();
 
-    int getDaysRented() const;
-    const Movie& getMovie() const;
+    virtual int getDaysRented() const;
+    virtual Member getMovie() const;
 
 private:
-    Movie _movie;
+    Member _movie;
     int _daysRented;
 };
 
 inline Rental::
-Rental( const Movie& movie, int daysRented )
-        : _movie( movie )
-        , _daysRented( daysRented ) {}
+Rental( Member movie, int daysRented ):
+        _movie(std::move(movie)), _daysRented( daysRented ) {
+}
 
 inline int Rental::
 getDaysRented() const { return _daysRented; }
 
-inline const Movie& Rental::
+inline Rental::Member Rental::
 getMovie() const { return _movie; }
+
+inline Rental::Rental() {
+
+}
 
 #endif // RENTAL_H
