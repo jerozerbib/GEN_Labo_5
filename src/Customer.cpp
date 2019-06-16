@@ -1,7 +1,9 @@
 // Customer.cpp
 #include <sstream>
 #include <vector>
+
 #include "Customer.h"
+#include "PrinterToText.h"
 
 using std::ostringstream;
 using std::vector;
@@ -9,12 +11,14 @@ using std::vector;
 using namespace std;
 
 string Customer::statement(){
+    PrinterToText ptt;
     double totalAmount = 0;
     int frequentRenterPoints = 0;
     vector< Rental >::iterator iter = _rentals.begin();
     vector< Rental >::iterator iter_end = _rentals.end();
     ostringstream result;
-    result << "Rental Record for " << getName() << "\n";
+    //result << "Rental Record for " << getName() << "\n";
+    result << ptt.printName(*this);
     for ( ; iter != iter_end; ++iter ) {
         double thisAmount = 0;
         Rental each = *iter;
@@ -26,14 +30,17 @@ string Customer::statement(){
         frequentRenterPoints += computeFrequentPoint(each);
 
         // show figures for this rental
-        result << "\t" << each.getMovie()->getTitle() << "\t"
-               << thisAmount << "\n";
+        /*result << "\t" << each.getMovie()->getTitle() << "\t"
+               << thisAmount << "\n";*/
+        result << ptt.printAmountForMovie(*each.getMovie(), thisAmount);
         totalAmount += thisAmount;
     }
     // add footer lines
-    result << "Amount owed is " << totalAmount << "\n";
-    result << "You earned " << frequentRenterPoints
-           << " frequent renter points";
+    //result << "Amount owed is " << totalAmount << "\n";
+    result << ptt.printAmount(totalAmount);
+    /*result << "You earned " << frequentRenterPoints
+           << " frequent renter points";*/
+    result << ptt.printFrequentPoints(frequentRenterPoints);
     return result.str();
 }
 
