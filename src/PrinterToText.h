@@ -1,7 +1,3 @@
-//
-// Created by Baptiste on 16/06/2019.
-//
-
 #ifndef GEN_LABO5_PRINTERTOTEXT_H
 #define GEN_LABO5_PRINTERTOTEXT_H
 

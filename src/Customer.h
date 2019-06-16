@@ -4,9 +4,8 @@
 #include <string>
 #include <vector>
 #include "Rental.h"
-#include "PrinterInterface.h"
 
-class Customer : PrinterInterface {
+class Customer {
 public:
     Customer();
     explicit Customer( const std::string& name );

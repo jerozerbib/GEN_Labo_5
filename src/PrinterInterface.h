@@ -1,13 +1,8 @@
-//
-// Created by Baptiste on 16/06/2019.
-//
-
 #ifndef GEN_LABO5_PRINTERINTERFACE_H
 #define GEN_LABO5_PRINTERINTERFACE_H
 
 #include <string>
-
-class Customer;
+#include "Customer.h"
 
 /**
  * Cette classe permet de rendre modulaire l'affichage des statement rendant ainsi
